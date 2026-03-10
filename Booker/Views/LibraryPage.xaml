@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Booker.ViewModels"
+             xmlns:models="clr-namespace:Booker.Models"
+             x:Class="Booker.Views.LibraryPage"
+             Title="Library"
+             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+
+    <!-- BindingContext set via code-behind constructor -->
+
+    <RefreshView Command="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsRefreshing}"
+                 RefreshColor="#C4572A">
+        <CollectionView ItemsSource="{Binding MyLibrary}" Margin="16">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                    <Label Text="📚" FontSize="48" HorizontalOptions="Center" />
+                    <Label Text="Your library is empty"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#1A1610"
+                           HorizontalOptions="Center" />
+                    <Label Text="Search for books and add them here"
+                           FontSize="13"
+                           TextColor="#8A7F6E"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:SavedBook">
+                    <Border BackgroundColor="#EDE8DE"
+                            Stroke="#D4CCBC"
+                            StrokeThickness="1"
+                            Margin="0,6">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="70,*"
+                              ColumnSpacing="12"
+                              Padding="12">
+
+                            <Image Grid.Column="0"
+                                   Source="{Binding Thumbnail}"
+                                   HeightRequest="95"
+                                   WidthRequest="70"
+                                   Aspect="AspectFill">
+                                <Image.Clip>
+                                    <RoundRectangleGeometry CornerRadius="6" Rect="0,0,70,95"/>
+                                </Image.Clip>
+                            </Image>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                <Label Text="{Binding Title}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#1A1610"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Author}"
+                                       FontSize="12"
+                                       TextColor="#8A7F6E" />
+
+                                <!-- Progress bar: ConverterParameter cannot take a Binding in MAUI,
+                                     so we compute progress in a DataTrigger instead.
+                                     Default is 0; a MultiTrigger would need code-behind.
+                                     The cleanest fix is a computed property on SavedBook. -->
+                                <ProgressBar x:Name="ReadingProgress"
+                                             ProgressColor="#C4572A"
+                                             BackgroundColor="#D4CCBC"
+                                             HeightRequest="3"
+                                             Progress="{Binding ReadingProgress}" />
+
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           TextColor="#8A7F6E"
+                                           FontSize="11">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding PagesRead}" />
+                                                <Span Text="/" />
+                                                <Span Text="{Binding PageCount}" />
+                                                <Span Text=" pages" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Button Grid.Column="1"
+                                            Text="Update"
+                                            FontSize="11"
+                                            BackgroundColor="#1A1610"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="32"
+                                            Padding="10,0"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=UpdateProgressCommand}" />
+
+                                    <Button Grid.Column="2"
+                                            Text="🗑"
+                                            FontSize="14"
+                                            BackgroundColor="Transparent"
+                                            TextColor="#C4572A"
+                                            BorderColor="#C4572A"
+                                            BorderWidth="1"
+                                            CornerRadius="8"
+                                            HeightRequest="32"
+                                            WidthRequest="36"
+                                            Padding="0"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=DeleteBookCommand}" />
+                                </Grid>
+
+                                <Label Text="✓ Finished"
+                                       FontSize="11"
+                                       TextColor="#4A9E6A"
+                                       IsVisible="{Binding IsFinished}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

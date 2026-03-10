@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Booker.ViewModels"
+             x:Class="Booker.Views.StatsPage"
+             Title="Stats"
+             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+
+    <!-- BindingContext is set via the code-behind constructor (DI-injected StatsViewModel) -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label Text="Reading Stats"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1A1610" />
+
+            <!-- Stats grid -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                  ColumnSpacing="12" RowSpacing="12">
+
+                <Border Grid.Column="0" Grid.Row="0"
+                        BackgroundColor="#EDE8DE" Stroke="#D4CCBC">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <VerticalStackLayout Padding="16" Spacing="4">
+                        <Label Text="{Binding TotalBooks}"
+                               FontSize="32" FontAttributes="Bold" TextColor="#1A1610"/>
+                        <Label Text="Total Books" FontSize="11" TextColor="#8A7F6E" CharacterSpacing="1"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" Grid.Row="0"
+                        BackgroundColor="#EDE8DE" Stroke="#D4CCBC">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <VerticalStackLayout Padding="16" Spacing="4">
+                        <Label Text="{Binding ReadBooks}"
+                               FontSize="32" FontAttributes="Bold" TextColor="#C4572A"/>
+                        <Label Text="Finished" FontSize="11" TextColor="#8A7F6E" CharacterSpacing="1"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="1"
+                        BackgroundColor="#EDE8DE" Stroke="#D4CCBC">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <VerticalStackLayout Padding="16" Spacing="4">
+                        <Label Text="{Binding TotalPagesRead}"
+                               FontSize="32" FontAttributes="Bold" TextColor="#1A1610"/>
+                        <Label Text="Pages Read" FontSize="11" TextColor="#8A7F6E" CharacterSpacing="1"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" Grid.Row="1"
+                        BackgroundColor="#1A1610" Stroke="Transparent">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <VerticalStackLayout Padding="16" Spacing="4">
+                        <Label Text="{Binding ReadPercentage, StringFormat='{0:P0}'}"
+                               FontSize="32" FontAttributes="Bold" TextColor="#C4572A"/>
+                        <Label Text="Completion" FontSize="11" TextColor="#8A7F6E" CharacterSpacing="1"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Top Genres -->
+            <Label Text="TOP GENRES"
+                   FontSize="11"
+                   CharacterSpacing="3"
+                   TextColor="#C4572A"
+                   Margin="0,8,0,0"/>
+
+            <CollectionView ItemsSource="{Binding TopGenres}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:GenreStat">
+                        <Border BackgroundColor="#EDE8DE" Stroke="#D4CCBC" Margin="0,4">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Grid ColumnDefinitions="*,Auto" Padding="16,12">
+                                <Label Grid.Column="0"
+                                       Text="{Binding GenreName}"
+                                       FontSize="14" TextColor="#1A1610"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding Count}"
+                                       FontSize="14" FontAttributes="Bold"
+                                       TextColor="#C4572A"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

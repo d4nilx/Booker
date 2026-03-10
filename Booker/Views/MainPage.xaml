@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Booker.ViewModels"
+             x:Class="Booker.Views.MainPage"
+             Title="Booker"
+             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+
+    <!-- BindingContext set via code-behind constructor -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <!-- Header -->
+            <Label Text="booker."
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   TextColor="#1A1610" />
+            <Label Text="Your reading companion"
+                   FontSize="13"
+                   TextColor="#8A7F6E" />
+
+            <!-- Currently Reading Card -->
+            <Frame IsVisible="{Binding HasCurrentBook}"
+                   BackgroundColor="#EDE8DE"
+                   BorderColor="#D4CCBC"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="CURRENTLY READING"
+                           FontSize="10"
+                           CharacterSpacing="3"
+                           TextColor="#C4572A" />
+
+                    <Grid ColumnDefinitions="80,*" ColumnSpacing="16">
+                        <Image Grid.Column="0"
+                               Source="{Binding CurrentBook.Thumbnail}"
+                               HeightRequest="110"
+                               WidthRequest="80"
+                               Aspect="AspectFill">
+                            <Image.Clip>
+                                <RoundRectangleGeometry CornerRadius="6" Rect="0,0,80,110" />
+                            </Image.Clip>
+                        </Image>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Label Text="{Binding CurrentBook.Title}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#1A1610"
+                                   MaxLines="2"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding CurrentBook.Author}"
+                                   FontSize="12"
+                                   TextColor="#8A7F6E" />
+                            <Label TextColor="#8A7F6E" FontSize="11">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CurrentBook.PagesRead}" />
+                                        <Span Text=" / " />
+                                        <Span Text="{Binding CurrentBook.PageCount}" />
+                                        <Span Text=" pages" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <!-- ReadingProgress is now a proper computed property on the ViewModel -->
+                            <ProgressBar Progress="{Binding ReadingProgress}"
+                                         ProgressColor="#C4572A"
+                                         BackgroundColor="#D4CCBC"
+                                         HeightRequest="4" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Empty state -->
+            <Frame IsVisible="{Binding HasCurrentBook, Converter={StaticResource InvertedBool}}"
+                   BackgroundColor="#EDE8DE"
+                   BorderColor="#D4CCBC"
+                   CornerRadius="12"
+                   Padding="32"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="📚" FontSize="40" HorizontalOptions="Center" />
+                    <Label Text="No book in progress"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#1A1610"
+                           HorizontalOptions="Center" />
+                    <Label Text="Search for a book and add it to your library"
+                           FontSize="12"
+                           TextColor="#8A7F6E"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Quick nav buttons — GoToLibraryCommand and GoToSearchCommand now exist -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="My Library"
+                        BackgroundColor="#1A1610"
+                        TextColor="#F5F0E8"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Command="{Binding GoToLibraryCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Search Books"
+                        BackgroundColor="Transparent"
+                        TextColor="#1A1610"
+                        BorderColor="#D4CCBC"
+                        BorderWidth="1"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Command="{Binding GoToSearchCommand}" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,53 @@
+# ===========================
+# .NET / MAUI
+# ===========================
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.DotSettings.user
+
+# ===========================
+# Rider IDE
+# ===========================
+.idea/
+
+# ===========================
+# macOS
+# ===========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# ===========================
+# NuGet
+# ===========================
+*.nupkg
+packages/
+.nuget/
+
+# ===========================
+# Android
+# ===========================
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+
+# ===========================
+# iOS / macOS signing
+# ===========================
+*.p12
+*.mobileprovision
+*.provisionprofile
+xcuserdata/
+
+# ===========================
+# Build artifacts
+# ===========================
+publish/
+*.zip
+*.log

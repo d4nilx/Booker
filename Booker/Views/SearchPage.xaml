@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Booker.ViewModels"
+             xmlns:models="clr-namespace:Booker.Models"
+             x:Class="Booker.Views.SearchPage"
+             Title="Search"
+             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+
+    <!-- BindingContext is no longer set here — it is injected via the code-behind constructor -->
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Search bar -->
+        <Border Grid.Row="0"
+                BackgroundColor="#EDE8DE"
+                Stroke="#D4CCBC"
+                StrokeThickness="1"
+                Margin="16,16,16,8">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,Auto" Padding="16,0">
+                <Entry Grid.Column="0"
+                       Placeholder="Search books..."
+                       PlaceholderColor="#8A7F6E"
+                       Text="{Binding SearchQuery}"
+                       TextColor="#1A1610"
+                       BackgroundColor="Transparent"
+                       ReturnCommand="{Binding SearchCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="→"
+                        BackgroundColor="#C4572A"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="38"
+                        WidthRequest="38"
+                        FontSize="16"
+                        Command="{Binding SearchCommand}"
+                        Margin="8,6" />
+            </Grid>
+        </Border>
+
+        <!-- Loading indicator — visible only while IsBusy is true -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="#C4572A"
+                           VerticalOptions="Center" />
+
+        <!-- Results list — hidden while loading -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding BooksList}"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBool}}"
+                        Margin="16,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:SavedBook">
+                    <Border BackgroundColor="#EDE8DE"
+                            Stroke="#D4CCBC"
+                            StrokeThickness="1"
+                            Margin="0,6">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="70,*,Auto"
+                              ColumnSpacing="12"
+                              Padding="12">
+
+                            <Image Grid.Column="0"
+                                   Source="{Binding Thumbnail}"
+                                   HeightRequest="95"
+                                   WidthRequest="70"
+                                   Aspect="AspectFill">
+                                <Image.Clip>
+                                    <RoundRectangleGeometry CornerRadius="6" Rect="0,0,70,95"/>
+                                </Image.Clip>
+                            </Image>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="4"
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding Title}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#1A1610"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Author}"
+                                       FontSize="12"
+                                       TextColor="#8A7F6E" />
+                                <Label TextColor="#8A7F6E" FontSize="11">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PageCount}" />
+                                            <Span Text=" pages" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding Category}"
+                                       FontSize="10"
+                                       TextColor="#C4572A"
+                                       IsVisible="{Binding Category, Converter={StaticResource StringToBool}}" />
+                            </VerticalStackLayout>
+
+                            <!-- SaveBookCommand is on the parent ViewModel, not on SavedBook,
+                                 so we walk up with AncestorType to find it. -->
+                            <Button Grid.Column="2"
+                                    Text="+"
+                                    FontSize="20"
+                                    BackgroundColor="#1A1610"
+                                    TextColor="White"
+                                    CornerRadius="20"
+                                    HeightRequest="40"
+                                    WidthRequest="40"
+                                    VerticalOptions="Center"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=SaveBookCommand}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
