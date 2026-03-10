@@ -84,3 +84,7 @@ Booker/
 ## License
 
 MIT
+
+---
+
+Created by Daniil Zhdanov (d4nilx)
