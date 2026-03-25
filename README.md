@@ -37,7 +37,7 @@ Search for books using the Google Books API, save them to your local library, tr
 ### Run
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Booker.git
+git clone https://github.com/d4nilx/Booker.git
 cd Booker
 dotnet restore
 dotnet build
