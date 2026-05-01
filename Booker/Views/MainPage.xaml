@@ -12,7 +12,7 @@
         <VerticalStackLayout Padding="24" Spacing="24">
 
             <!-- Header -->
-            <Label Text="booker."
+            <Label Text="Booker"
                    FontSize="36"
                    FontAttributes="Bold"
                    TextColor="#1A1610" />

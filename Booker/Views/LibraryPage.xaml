@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:Booker.ViewModels"
              xmlns:models="clr-namespace:Booker.Models"
              x:Class="Booker.Views.LibraryPage"
+             x:Name="PageRoot"
              Title="Library"
              BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
 
@@ -31,13 +32,29 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:SavedBook">
-                    <Border BackgroundColor="#EDE8DE"
-                            Stroke="#D4CCBC"
-                            StrokeThickness="1"
-                            Margin="0,6">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
+                    <SwipeView Margin="0,6">
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="#C4572A"
+                                           CommandParameter="{Binding .}"
+                                           Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.DeleteBookCommand}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Border BackgroundColor="#EDE8DE"
+                                Stroke="#D4CCBC"
+                                StrokeThickness="1">
+                            
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=OpenBookDetailsCommand}" />
+                            </Border.GestureRecognizers>
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
 
                         <Grid ColumnDefinitions="70,*"
                               ColumnSpacing="12"
@@ -64,10 +81,7 @@
                                        FontSize="12"
                                        TextColor="#8A7F6E" />
 
-                                <!-- Progress bar: ConverterParameter cannot take a Binding in MAUI,
-                                     so we compute progress in a DataTrigger instead.
-                                     Default is 0; a MultiTrigger would need code-behind.
-                                     The cleanest fix is a computed property on SavedBook. -->
+                                
                                 <ProgressBar x:Name="ReadingProgress"
                                              ProgressColor="#C4572A"
                                              BackgroundColor="#D4CCBC"
@@ -98,20 +112,7 @@
                                             Padding="10,0"
                                             CommandParameter="{Binding .}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=UpdateProgressCommand}" />
-
-                                    <Button Grid.Column="2"
-                                            Text="🗑"
-                                            FontSize="14"
-                                            BackgroundColor="Transparent"
-                                            TextColor="#C4572A"
-                                            BorderColor="#C4572A"
-                                            BorderWidth="1"
-                                            CornerRadius="8"
-                                            HeightRequest="32"
-                                            WidthRequest="36"
-                                            Padding="0"
-                                            CommandParameter="{Binding .}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=DeleteBookCommand}" />
+                                    
                                 </Grid>
 
                                 <Label Text="✓ Finished"
@@ -121,6 +122,7 @@
                             </VerticalStackLayout>
                         </Grid>
                     </Border>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

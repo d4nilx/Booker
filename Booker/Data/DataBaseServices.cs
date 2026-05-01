@@ -6,10 +6,7 @@ namespace Booker.Data;
 public class DataBaseServices
 {
     private SQLiteAsyncConnection? _db;
-
-    // SemaphoreSlim(1,1) acts as an async-compatible mutex.
-    // Without this, two ViewModels calling Init() simultaneously on first launch could
-    // both see _db == null and create two connections, causing data corruption.
+    
     private readonly SemaphoreSlim _initLock = new(1, 1);
 
     private async Task Init()
@@ -24,7 +21,7 @@ public class DataBaseServices
 
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "booker.db");
             _db = new SQLiteAsyncConnection(databasePath);
-            await _db.CreateTableAsync<SavedBook>();
+            await _db.CreateTablesAsync<SavedBook, ReadingSession>();
         }
         finally
         {
@@ -54,5 +51,18 @@ public class DataBaseServices
     {
         await Init();
         return await _db!.UpdateAsync(book);
+    }
+    
+    public async Task<int> SaveReadingSessionAsync(ReadingSession session)
+    {
+        await Init();
+        return await _db!.InsertAsync(session);
+    }
+
+    public async Task<List<ReadingSession>> GetReadingSessionsAsync(int bookId)
+    {
+        await Init(); 
+        return await _db!.Table <ReadingSession>()
+                          .Where(s => s.BookId == bookId).ToListAsync();
     }
 }

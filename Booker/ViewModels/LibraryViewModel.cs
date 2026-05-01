@@ -103,4 +103,15 @@ public partial class LibraryViewModel : ObservableObject
             }
         });
     }
+    
+    [RelayCommand]
+    private async Task OpenBookDetails(SavedBook book)
+    {
+        if (book == null) return;
+        
+        await Shell.Current.GoToAsync("BookDetailPage", new Dictionary<string, object>
+        {
+            { "SavedBook", book } 
+        });
+    }
 }
