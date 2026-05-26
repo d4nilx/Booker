@@ -1,8 +1,20 @@
 # 📚 Booker
 
-A cross-platform mobile app for tracking your reading built with **.NET MAUI**, using MVVM architecture, SQLite local storage, and the Google Books API. Targeting Android, iOS, and macOS.
+A cross-platform mobile app for tracking your reading built with **.NET MAUI**, using MVVM architecture, SQLite local storage, and the Google Books API. Targeting Android and iOS.
 
-Search for books using the Google Books API, save them to your local library, track your reading progress, and view your reading stats — all in one place.
+Search for books using the Google Books API, save them to your local library, track your reading progress with a built-in timer, and view your reading stats — all in one place.
+
+---
+
+## Screenshots
+
+<p float="left">
+  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_33_06.png" width="180"/>
+  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_29.png" width="180"/>
+  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_38.png" width="180"/>
+  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_51.png" width="180"/>
+  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_54.png" width="180"/>
+</p>
 
 ---
 
@@ -11,6 +23,8 @@ Search for books using the Google Books API, save them to your local library, tr
 - 🔍 **Search** — Find books via the Google Books API
 - 📚 **Library** — Save books and track reading progress page by page
 - 🏠 **Home** — See your currently reading book at a glance
+- ⏱️ **Reading Timer** — Track reading sessions with start/stop timer
+- 📈 **Session History** — View reading history per book with charts
 - 📊 **Stats** — Total books, pages read, completion rate, and top genres
 
 ---
@@ -23,7 +37,8 @@ Search for books using the Google Books API, save them to your local library, tr
 | Architecture | MVVM |
 | Local database | SQLite via `sqlite-net-pcl` |
 | MVVM helpers | CommunityToolkit.Mvvm |
-| Book data | Google Books API (free, no key required) |
+| Charts | Microcharts + SkiaSharp |
+| Book data | Google Books API |
 
 ---
 
@@ -87,8 +102,4 @@ MIT
 
 ---
 
-Created by Daniil Zhdanov
-
----
-
-Created by Daniil Zhdanov (d4nilx)
+Created by [Daniil Zhdanov](https://github.com/d4nilx)
