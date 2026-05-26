@@ -9,11 +9,11 @@ Search for books using the Google Books API, save them to your local library, tr
 ## Screenshots
 
 <p float="left">
-  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_33_06.png" width="180"/>
-  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_29.png" width="180"/>
-  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_38.png" width="180"/>
-  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_51.png" width="180"/>
-  <img src="screenshots/Simulator_Screenshot_-_iPhone_17_-_2026-05-26_at_09_34_54.png" width="180"/>
+  <img src="screenshots/sreenshot1.png" width="180"/>
+  <img src="screenshots/screenshot2.png" width="180"/>
+  <img src="screenshots/screenshot3.png" width="180"/>
+  <img src="screenshots/screenshot4.png" width="180"/>
+  <img src="screenshots/screenshot5.png" width="180"/>
 </p>
 
 ---
