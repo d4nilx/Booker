@@ -1,6 +1,6 @@
 # 📚 Booker
 
-A personal reading tracker built with **.NET MAUI**, targeting Android, iOS, and macOS.
+A cross-platform mobile app for tracking your reading built with **.NET MAUI**, using MVVM architecture, SQLite local storage, and the Google Books API. Targeting Android, iOS, and macOS.
 
 Search for books using the Google Books API, save them to your local library, track your reading progress, and view your reading stats — all in one place.
 
@@ -84,6 +84,10 @@ Booker/
 ## License
 
 MIT
+
+---
+
+Created by Daniil Zhdanov
 
 ---
 

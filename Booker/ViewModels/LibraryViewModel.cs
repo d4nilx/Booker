@@ -65,44 +65,6 @@ public partial class LibraryViewModel : ObservableObject
         // Update the in-memory list immediately — no need to reload from DB.
         await MainThread.InvokeOnMainThreadAsync(() => MyLibrary.Remove(book));
     }
-
-    // UpdateProgressCommand is bound to the "Update" button; CommandParameter passes the book.
-    [RelayCommand]
-    private async Task UpdateProgress(SavedBook book)
-    {
-        if (book == null) return;
-
-        string? input = await Shell.Current.DisplayPromptAsync(
-            "Update Progress",
-            $"Pages read for \"{book.Title}\" (max {book.PageCount}):",
-            initialValue: book.PagesRead.ToString(),
-            keyboard: Keyboard.Numeric);
-
-        if (input == null) return; // user cancelled
-
-        if (!int.TryParse(input, out int pages) || pages < 0 || (book.PageCount > 0 && pages > book.PageCount))
-        {
-            await Shell.Current.DisplayAlert("Invalid", "Please enter a valid page number.", "OK");
-            return;
-        }
-
-        book.PagesRead = pages;
-        // Automatically mark finished when the user reaches the last page.
-        book.IsFinished = book.PageCount > 0 && pages >= book.PageCount;
-
-        await _dbService.UpdateBookAsync(book);
-
-        // Refresh the list so the progress bar and "Finished" label update instantly.
-        await MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            int idx = MyLibrary.IndexOf(book);
-            if (idx >= 0)
-            {
-                MyLibrary.RemoveAt(idx);
-                MyLibrary.Insert(idx, book);
-            }
-        });
-    }
     
     [RelayCommand]
     private async Task OpenBookDetails(SavedBook book)

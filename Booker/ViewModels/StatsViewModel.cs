@@ -41,9 +41,7 @@ public partial class StatsViewModel : ObservableObject
             .OrderByDescending(g => g.Count)
             .Take(5)
             .ToList();
-
-        // All UI-bound property writes must happen on the main thread.
-        // Previously the collection and properties were set from a background Task.Run thread.
+        
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
             TotalBooks = books.Count;

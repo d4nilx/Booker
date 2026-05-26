@@ -51,3 +51,9 @@ xcuserdata/
 publish/
 *.zip
 *.log
+
+# ===========================
+# Secrets
+# ===========================
+**/appsettings.json
+**/secrets.json
