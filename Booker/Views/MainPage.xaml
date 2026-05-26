@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:Booker.ViewModels"
              x:Class="Booker.Views.MainPage"
              Title="Booker"
-             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+             BackgroundColor="#1C2B1E" Shell.NavBarIsVisible="False">
 
     <!-- BindingContext set via code-behind constructor -->
 
@@ -15,15 +15,15 @@
             <Label Text="Booker"
                    FontSize="36"
                    FontAttributes="Bold"
-                   TextColor="#1A1610" />
+                   TextColor="#F0EDE4" />
             <Label Text="Your reading companion"
                    FontSize="13"
-                   TextColor="#8A7F6E" />
+                   TextColor="#7A9E7E" />
 
             <!-- Currently Reading Card -->
             <Frame IsVisible="{Binding HasCurrentBook}"
-                   BackgroundColor="#EDE8DE"
-                   BorderColor="#D4CCBC"
+                   BackgroundColor="#243327"
+                   BorderColor="#2E4030"
                    CornerRadius="12"
                    Padding="20"
                    HasShadow="False">
@@ -31,7 +31,7 @@
                     <Label Text="CURRENTLY READING"
                            FontSize="10"
                            CharacterSpacing="3"
-                           TextColor="#C4572A" />
+                           TextColor="#8FBC8F" />
 
                     <Grid ColumnDefinitions="80,*" ColumnSpacing="16">
                         <Image Grid.Column="0"
@@ -48,13 +48,13 @@
                             <Label Text="{Binding CurrentBook.Title}"
                                    FontSize="16"
                                    FontAttributes="Bold"
-                                   TextColor="#1A1610"
+                                   TextColor="#F0EDE4"
                                    MaxLines="2"
                                    LineBreakMode="TailTruncation" />
                             <Label Text="{Binding CurrentBook.Author}"
                                    FontSize="12"
-                                   TextColor="#8A7F6E" />
-                            <Label TextColor="#8A7F6E" FontSize="11">
+                                   TextColor="#7A9E7E" />
+                            <Label TextColor="#7A9E7E" FontSize="11">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding CurrentBook.PagesRead}" />
@@ -67,8 +67,8 @@
 
                             <!-- ReadingProgress is now a proper computed property on the ViewModel -->
                             <ProgressBar Progress="{Binding ReadingProgress}"
-                                         ProgressColor="#C4572A"
-                                         BackgroundColor="#D4CCBC"
+                                         ProgressColor="#8FBC8F"
+                                         BackgroundColor="#2E4030"
                                          HeightRequest="4" />
                         </VerticalStackLayout>
                     </Grid>
@@ -77,8 +77,8 @@
 
             <!-- Empty state -->
             <Frame IsVisible="{Binding HasCurrentBook, Converter={StaticResource InvertedBool}}"
-                   BackgroundColor="#EDE8DE"
-                   BorderColor="#D4CCBC"
+                   BackgroundColor="#243327"
+                   BorderColor="#2E4030"
                    CornerRadius="12"
                    Padding="32"
                    HasShadow="False">
@@ -87,11 +87,11 @@
                     <Label Text="No book in progress"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#1A1610"
+                           TextColor="#F0EDE4"
                            HorizontalOptions="Center" />
                     <Label Text="Search for a book and add it to your library"
                            FontSize="12"
-                           TextColor="#8A7F6E"
+                           TextColor="#7A9E7E"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
@@ -101,8 +101,8 @@
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <Button Grid.Column="0"
                         Text="My Library"
-                        BackgroundColor="#1A1610"
-                        TextColor="#F5F0E8"
+                        BackgroundColor="#8FBC8F"
+                        TextColor="#1C2B1E"
                         CornerRadius="10"
                         HeightRequest="50"
                         Command="{Binding GoToLibraryCommand}" />
@@ -110,8 +110,8 @@
                 <Button Grid.Column="1"
                         Text="Search Books"
                         BackgroundColor="Transparent"
-                        TextColor="#1A1610"
-                        BorderColor="#D4CCBC"
+                        TextColor="#F0EDE4"
+                        BorderColor="#2E4030"
                         BorderWidth="1"
                         CornerRadius="10"
                         HeightRequest="50"

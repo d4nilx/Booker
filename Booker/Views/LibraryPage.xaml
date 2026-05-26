@@ -6,13 +6,13 @@
              x:Class="Booker.Views.LibraryPage"
              x:Name="PageRoot"
              Title="Library"
-             BackgroundColor="#F5F0E8" Shell.NavBarIsVisible="False">
+             BackgroundColor="#1C2B1E" Shell.NavBarIsVisible="False">
 
     <!-- BindingContext set via code-behind constructor -->
 
     <RefreshView Command="{Binding RefreshCommand}"
                  IsRefreshing="{Binding IsRefreshing}"
-                 RefreshColor="#C4572A">
+                 RefreshColor="#8FBC8F">
         <CollectionView ItemsSource="{Binding MyLibrary}" Margin="16">
 
             <CollectionView.EmptyView>
@@ -21,11 +21,11 @@
                     <Label Text="Your library is empty"
                            FontSize="18"
                            FontAttributes="Bold"
-                           TextColor="#1A1610"
+                           TextColor="#F0EDE4"
                            HorizontalOptions="Center" />
                     <Label Text="Search for books and add them here"
                            FontSize="13"
-                           TextColor="#8A7F6E"
+                           TextColor="#7A9E7E"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
@@ -42,8 +42,8 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border BackgroundColor="#EDE8DE"
-                                Stroke="#D4CCBC"
+                        <Border BackgroundColor="#243327"
+                                Stroke="#2E4030"
                                 StrokeThickness="1">
                             
                             <Border.GestureRecognizers>
@@ -74,23 +74,23 @@
                                 <Label Text="{Binding Title}"
                                        FontSize="14"
                                        FontAttributes="Bold"
-                                       TextColor="#1A1610"
+                                       TextColor="#F0EDE4"
                                        MaxLines="2"
                                        LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding Author}"
                                        FontSize="12"
-                                       TextColor="#8A7F6E" />
+                                       TextColor="#7A9E7E" />
 
                                 
                                 <ProgressBar x:Name="ReadingProgress"
-                                             ProgressColor="#C4572A"
-                                             BackgroundColor="#D4CCBC"
+                                             ProgressColor="#8FBC8F"
+                                             BackgroundColor="#2E4030"
                                              HeightRequest="3"
                                              Progress="{Binding ReadingProgress}" />
 
                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                     <Label Grid.Column="0"
-                                           TextColor="#8A7F6E"
+                                           TextColor="#7A9E7E"
                                            FontSize="11">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -101,23 +101,12 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-
-                                    <Button Grid.Column="1"
-                                            Text="Update"
-                                            FontSize="11"
-                                            BackgroundColor="#1A1610"
-                                            TextColor="White"
-                                            CornerRadius="8"
-                                            HeightRequest="32"
-                                            Padding="10,0"
-                                            CommandParameter="{Binding .}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=UpdateProgressCommand}" />
                                     
                                 </Grid>
 
                                 <Label Text="✓ Finished"
                                        FontSize="11"
-                                       TextColor="#4A9E6A"
+                                       TextColor="#8FBC8F"
                                        IsVisible="{Binding IsFinished}" />
                             </VerticalStackLayout>
                         </Grid>

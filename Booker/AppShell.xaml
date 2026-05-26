@@ -4,27 +4,38 @@
        xmlns:views="clr-namespace:Booker.Views"
        x:Class="Booker.AppShell"
        Shell.NavBarHasShadow="False"
-       BackgroundColor="#F5F0E8">
+       BackgroundColor="#1C2B1E">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TabBar">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#162219" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="#7A9E7E" />
+                <Setter Property="Shell.TabBarTitleColor" Value="#7A9E7E" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#4A6B4E" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
 
     <TabBar>
         <!-- Route names must match the strings used in Shell.Current.GoToAsync() calls in ViewModels -->
         <ShellContent Title="Home"
-                      Icon="tab_home.png"
+                      Icon="home.png"
                       Route="MainPage"
                       ContentTemplate="{DataTemplate views:MainPage}" />
 
         <ShellContent Title="Search"
-                      Icon="tab_search.png"
+                      Icon="search.png"
                       Route="SearchPage"
                       ContentTemplate="{DataTemplate views:SearchPage}" />
 
         <ShellContent Title="Library"
-                      Icon="tab_library.png"
+                      Icon="list.png"
                       Route="LibraryPage"
                       ContentTemplate="{DataTemplate views:LibraryPage}" />
 
         <ShellContent Title="Stats"
-                      Icon="tab_stats.png"
+                      Icon="stats.png"
                       Route="StatsPage"
                       ContentTemplate="{DataTemplate views:StatsPage}" />
     </TabBar>

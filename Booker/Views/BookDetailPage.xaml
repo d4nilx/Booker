@@ -2,36 +2,133 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Booker.ViewModels"
+             xmlns:maui="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="Booker.Views.BookDetailPage"
              Title="{Binding Book.Title}"
-             BackgroundColor="#F5F0E8">
+             BackgroundColor="#1C2B1E" Shell.NavBarIsVisible="False"> 
 
-    <VerticalStackLayout Spacing="20" Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-        
-        <Label Text="{Binding Book.Title}" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
-        <Label Text="{Binding Book.Author}" FontSize="16" TextColor="#8A7F6E" HorizontalOptions="Center" />
-        
-        <Label Text="{Binding Elapsed, StringFormat='{0:hh\\:mm\\:ss}'}" 
-               FontSize="48" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center" 
-               Margin="0,30" />
-        
-        <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
             
-            <Button Text="Start" 
-                    Command="{Binding StartTimerCommand}" 
-                    BackgroundColor="#4A9E6A" 
-                    IsVisible="{Binding IsRunning, Converter={x:StaticResource InvertedBool}}" 
-                    WidthRequest="120"/>
+            <Border StrokeShape="RoundRectangle 12" 
+                    Stroke="#2E4030" 
+                    StrokeThickness="1"
+                    HorizontalOptions="Center"
+                    HeightRequest="240" WidthRequest="160"
+                    Margin="0,10,0,0">
+                <Border.Shadow>
+                    <Shadow Brush="#1A1610" Offset="0,10" Radius="15" Opacity="0.1" /> 
+                </Border.Shadow>
+                <Image Source="{Binding Book.Thumbnail}" Aspect="AspectFill" />
+            </Border>
             
-            <Button Text="Stop" 
-                    Command="{Binding StopTimerCommand}" 
-                    BackgroundColor="#C4572A" 
-                    IsVisible="{Binding IsRunning}" 
-                    WidthRequest="120"/>
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                <Label Text="{Binding Book.Title}" FontSize="24" FontAttributes="Bold" TextColor="#F0EDE4" HorizontalOptions="Center" HorizontalTextAlignment="Center" MaxLines="2" />
+                <Label Text="{Binding Book.Author}" FontSize="16" TextColor="#7A9E7E" HorizontalOptions="Center" />
+            </VerticalStackLayout>
             
-        </HorizontalStackLayout>
-        
-    </VerticalStackLayout>
+            <Border BackgroundColor="#243327"
+                    Stroke="#2E4030"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="20,14"
+                    HorizontalOptions="FillAndExpand">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Reading Progress" FontSize="13" TextColor="#7A9E7E" />
+                        <Label Grid.Column="1" FontSize="13" FontAttributes="Bold" TextColor="#F0EDE4">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Book.PagesRead}" />
+                                    <Span Text=" / " />
+                                    <Span Text="{Binding Book.PageCount}" />
+                                    <Span Text=" pages" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
+                    <ProgressBar Progress="{Binding Book.ReadingProgress}"
+                                 ProgressColor="#8FBC8F"
+                                 BackgroundColor="#2E4030"
+                                 HeightRequest="4" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border BackgroundColor="#243327"
+            Stroke="#2E4030"
+            StrokeThickness="1"
+            StrokeShape="RoundRectangle 24"
+            Padding="40,20"
+            HorizontalOptions="Center"
+            Margin="0,5">
+                <Border.Shadow>
+                    <Shadow Brush="#1A1610" Offset="0,5" Radius="10" Opacity="0.05" />
+                </Border.Shadow>
+                <Label Text="{Binding Elapsed, StringFormat='{0:hh\\:mm\\:ss}'}" 
+                       FontSize="48" 
+                       FontAttributes="Bold" 
+                       TextColor="#F0EDE4" 
+                       HorizontalOptions="Center" />
+            </Border>
+         
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                <Button Text="Start" 
+                        Command="{Binding StartTimerCommand}" 
+                        BackgroundColor="#8FBC8F" 
+                        TextColor="#1C2B1E"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="48"
+                        IsVisible="{Binding IsRunning, Converter={x:StaticResource InvertedBool}}" 
+                        WidthRequest="110"/>
+                
+                <Button Text="Stop" 
+                        Command="{Binding StopTimerCommand}" 
+                        BackgroundColor="#C4572A" 
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="48"
+                        IsVisible="{Binding IsRunning}" 
+                        WidthRequest="110"/>
+                
+                <Button Text="Update"
+                        BackgroundColor="#2E4030"
+                        TextColor="#F0EDE4"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        HeightRequest="48"
+                        WidthRequest="110"
+                        Command="{Binding UpdateProgressCommand}" />
+            </HorizontalStackLayout>
+            
+            <Border BackgroundColor="#243327"
+            Stroke="#2E4030"
+            StrokeThickness="1"
+            StrokeShape="RoundRectangle 20"
+            Padding="20"
+            Margin="0,10,0,30">
+                <Border.Shadow>
+                    <Shadow Brush="#1A1610" Offset="0,8" Radius="15" Opacity="0.05" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Stats" FontSize="16" FontAttributes="Bold" TextColor="#F0EDE4" />
+                    
+                    <maui:ChartView Chart="{Binding StatsChart}" 
+                                    HeightRequest="180" 
+                                    WidthRequest="300" 
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding HasStats}" />
+
+                    <Label Text="No reading sessions yet. Start the timer! 📖"
+                           IsVisible="{Binding HasStats, Converter={x:StaticResource InvertedBool}}"
+                           TextColor="#7A9E7E"
+                           FontSize="13"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
