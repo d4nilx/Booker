@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microcharts;
 using SkiaSharp;
+using System;
+using System.Collections.ObjectModel;
 
 namespace Booker.ViewModels;
 
@@ -130,6 +132,9 @@ public partial class BookDetailViewModel: ObservableObject
     [ObservableProperty]
     private Chart? _statsChart;
     
+    [ObservableProperty]
+    private ObservableCollection<ReadingSession> _readingSessions = new();
+    
     partial void OnBookChanged(SavedBook? value)
     {
         if (value != null)
@@ -141,6 +146,9 @@ public partial class BookDetailViewModel: ObservableObject
     private async Task LoadStatisticsAsync()
     {
         var sessions = await _db.GetReadingSessionsAsync(Book!.Id);
+        ReadingSessions = new ObservableCollection<ReadingSession>(
+            sessions.OrderByDescending(s => s.StartDateTime)
+        );
 
         var groupedStats = sessions
             .GroupBy(s => s.StartDateTime.Date)
